@@ -7,6 +7,7 @@
 
 ## Gradnja
 
+V direktoriju posamezne storitve:
 ```
 mvn clean package
 ```

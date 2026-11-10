@@ -1,0 +1,147 @@
+openapi: "3.0.4"
+info:
+  title: "Reservations API"
+  description: "Create and manage room reservations"
+  version: "1.0.0-SNAPSHOT"
+servers:
+  - url: "http://localhost:8080/api/v1"
+
+paths:
+  /reservations:
+    get:
+      tags:
+        - "Reservations"
+      summary: "Get all reservations"
+      description: "Returns a list of all reservations, optionally filtered by room number."
+      operationId: "getAllReservations"
+      parameters:
+        - name: "room"
+          in: "query"
+          schema:
+            type: "integer"
+          description: "Room number."
+          example: 123
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Reservation"
+    post:
+      tags:
+        - "Reservations"
+      summary: "Create a reservation"
+      description: "Creates a new reservation."
+      operationId: "createReservation"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Reservation"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reservation"
+        "400":
+          description: "Invalid request body"
+
+  /reservations/{id}:
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Unique identifier for a reservation"
+        schema:
+          type: "string"
+        example: "123e4567-e89b-12d3-a456-426614174000"
+    get:
+      tags:
+        - "Reservations"
+      summary: "Get reservation"
+      description: "Returns the details of a specific reservation."
+      operationId: "getReservation"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reservation"
+        "404":
+          description: "Unknown reservation ID"
+    put:
+      tags:
+        - "Reservations"
+      summary: "Update reservation"
+      description: "Updates the details of a specific reservation."
+      operationId: "updateReservation"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Reservation"
+      responses:
+        "200":
+          description: "Updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reservation"
+        "400":
+          description: "Invalid request body"
+        "404":
+          description: "Unknown reservation ID"
+    delete:
+      tags:
+        - "Reservations"
+      summary: "Delete reservation"
+      description: "Deletes a specific reservation."
+      operationId: "deleteReservation"
+      responses:
+        "204":
+          description: "Deleted"
+        "404":
+          description: "Unknown reservation ID"
+
+components:
+  schemas:
+    Reservation:
+      type: "object"
+      required:
+        - "id"
+        - "user_id"
+        - "room"
+        - "date_from"
+        - "date_to"
+      properties:
+        id:
+          type: "string"
+          readOnly: true
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          description: "Unique identifier for a reservation"
+        user_id:
+          type: "string"
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          description: "The user who created the reservation. Proper authentication will be implemented later."
+        room:
+          type: "integer"
+          example: 123
+          description: "Room number"
+        date_from:
+          type: "string"
+          format: "date-time"
+          example: "2026-11-02T17:00:00+01:00"
+          description: "Start date and time"
+        date_to:
+          type: "string"
+          format: "date-time"
+          example: "2026-11-02T18:00:00+01:00"
+          description: "End date and time"
