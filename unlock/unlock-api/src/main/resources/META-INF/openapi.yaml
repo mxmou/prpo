@@ -1,0 +1,58 @@
+openapi: "3.0.4"
+info:
+  title: "Unlock API"
+  description: "Allows users to unlock rooms they reserved"
+  version: "1.0.0-SNAPSHOT"
+servers:
+  - url: "http://localhost:8080/api/v1"
+
+paths:
+  /rooms/{room}:
+    parameters:
+      - name: "room"
+        in: "path"
+        required: true
+        description: "Room number"
+        schema:
+          type: "integer"
+        example: 123
+    put:
+      tags:
+        - "Rooms"
+      summary: "Lock or unlocks a room"
+      description: "Locks or unlocks the specified room if the user has reserved it."
+      operationId: "setRoomLocked"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - "user_id"
+                - "locked"
+              properties:
+                user_id:
+                  type: "string"
+                  readOnly: true
+                  example: "123e4567-e89b-12d3-a456-426614174000"
+                  description: "The user"
+                locked:
+                  type: "boolean"
+                  description: "True to lock the room, false to unlock."
+
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  locked:
+                    type: "boolean"
+                    description: "True if the room was locked, false if it was unlocked."
+        "400":
+          description: "Invalid request body"
+        "403":
+          description: "User does not have reservation"
