@@ -19,7 +19,7 @@ paths:
     put:
       tags:
         - "Rooms"
-      summary: "Lock or unlocks a room"
+      summary: "Lock or unlock a room"
       description: "Locks or unlocks the specified room if the user has reserved it."
       operationId: "setRoomLocked"
       requestBody:
