@@ -51,6 +51,8 @@ paths:
                   locked:
                     type: "boolean"
                     description: "True if the room was locked, false if it was unlocked."
+                required:
+                  - "locked"
         "400":
           description: "Invalid request body"
         "403":
