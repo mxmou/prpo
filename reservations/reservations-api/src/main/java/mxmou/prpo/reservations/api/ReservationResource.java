@@ -12,7 +12,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ReservationResource implements ReservationApi {
     @Context
@@ -34,10 +33,9 @@ public class ReservationResource implements ReservationApi {
 
     @Override
     public Reservation createReservation(@Valid @NotNull Reservation reservation) {
-        String id = UUID.randomUUID().toString();
-        reservation.setId(id);
+        reservation.setId(exampleId);
         response.setStatusCode(201);
-        response.putHeader("Location", uriInfo.getAbsolutePathBuilder().path(id).build().toString());
+        response.putHeader("Location", uriInfo.getAbsolutePathBuilder().path(exampleId).build().toString());
         return reservation;
     }
 
