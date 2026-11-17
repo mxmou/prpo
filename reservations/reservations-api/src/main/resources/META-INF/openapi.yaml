@@ -10,7 +10,7 @@ paths:
   /reservations:
     get:
       tags:
-        - "Reservations"
+        - "Reservation"
       summary: "Get all reservations"
       description: "Returns a list of all reservations, optionally filtered by room number."
       operationId: "getAllReservations"
@@ -32,7 +32,7 @@ paths:
                   $ref: "#/components/schemas/Reservation"
     post:
       tags:
-        - "Reservations"
+        - "Reservation"
       summary: "Create a reservation"
       description: "Creates a new reservation."
       operationId: "createReservation"
@@ -45,6 +45,11 @@ paths:
       responses:
         "201":
           description: "Created"
+          headers:
+            Location:
+              schema:
+                type: "string"
+              description: "URL of the new reservation"
           content:
             application/json:
               schema:
@@ -63,7 +68,7 @@ paths:
         example: "123e4567-e89b-12d3-a456-426614174000"
     get:
       tags:
-        - "Reservations"
+        - "Reservation"
       summary: "Get reservation"
       description: "Returns the details of a specific reservation."
       operationId: "getReservation"
@@ -78,7 +83,7 @@ paths:
           description: "Unknown reservation ID"
     put:
       tags:
-        - "Reservations"
+        - "Reservation"
       summary: "Update reservation"
       description: "Updates the details of a specific reservation."
       operationId: "updateReservation"
@@ -101,7 +106,7 @@ paths:
           description: "Unknown reservation ID"
     delete:
       tags:
-        - "Reservations"
+        - "Reservation"
       summary: "Delete reservation"
       description: "Deletes a specific reservation."
       operationId: "deleteReservation"
