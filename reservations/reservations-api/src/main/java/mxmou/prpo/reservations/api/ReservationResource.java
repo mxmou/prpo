@@ -23,7 +23,9 @@ public class ReservationResource implements ReservationApi {
     @Override
     public List<Reservation> getAllReservations(Integer room) {
         List<Reservation> result = new ArrayList<>();
-        result.add(this.getReservation("123e4567-e89b-12d3-a456-426614174000"));
+        if (room == null || room.equals(123)) {
+            result.add(this.getReservation("123e4567-e89b-12d3-a456-426614174000"));
+        }
         return result;
     }
 
