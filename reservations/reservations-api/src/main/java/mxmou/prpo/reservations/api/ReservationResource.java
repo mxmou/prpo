@@ -3,6 +3,7 @@ package mxmou.prpo.reservations.api;
 import io.vertx.core.http.HttpServerResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
 import mxmou.prpo.reservations.api.model.Reservation;
@@ -20,11 +21,13 @@ public class ReservationResource implements ReservationApi {
     @Context
     UriInfo uriInfo;
 
+    final String exampleId = "123e4567-e89b-12d3-a456-426614174000";
+
     @Override
     public List<Reservation> getAllReservations(Integer room) {
         List<Reservation> result = new ArrayList<>();
         if (room == null || room.equals(123)) {
-            result.add(this.getReservation("123e4567-e89b-12d3-a456-426614174000"));
+            result.add(this.getReservation(exampleId));
         }
         return result;
     }
@@ -40,24 +43,32 @@ public class ReservationResource implements ReservationApi {
 
     @Override
     public Reservation getReservation(String id) {
-        return new Reservation()
-                .id(id)
-                .userId("123e4567-e89b-12d3-a456-426614174000")
-                .room(123)
-                .dateFrom(OffsetDateTime.of(2026, 11, 1,
-                        17, 0, 0, 0, ZoneOffset.UTC))
-                .dateTo(OffsetDateTime.of(2026, 11, 1,
-                        18, 30, 0, 0, ZoneOffset.UTC));
+        if (id.equals(exampleId)) {
+            return new Reservation()
+                    .id(exampleId)
+                    .userId(exampleId)
+                    .room(123)
+                    .dateFrom(OffsetDateTime.of(2026, 11, 1,
+                            17, 0, 0, 0, ZoneOffset.UTC))
+                    .dateTo(OffsetDateTime.of(2026, 11, 1,
+                            18, 30, 0, 0, ZoneOffset.UTC));
+        }
+        throw new NotFoundException("Unknown reservation: " + id);
     }
 
     @Override
     public Reservation updateReservation(String id, @Valid @NotNull Reservation reservation) {
-        reservation.setId(id);
-        return reservation;
+        if (id.equals(exampleId)) {
+            reservation.setId(id);
+            return reservation;
+        }
+        throw new NotFoundException("Unknown reservation: " + id);
     }
 
     @Override
     public void deleteReservation(String id) {
-
+        if (!id.equals(exampleId)) {
+            throw new NotFoundException("Unknown reservation: " + id);
+        }
     }
 }
