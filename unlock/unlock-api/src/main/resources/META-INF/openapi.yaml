@@ -18,7 +18,7 @@ paths:
         example: 123
     put:
       tags:
-        - "Rooms"
+        - "Room"
       summary: "Lock or unlock a room"
       description: "Locks or unlocks the specified room if the user has reserved it."
       operationId: "setRoomLocked"

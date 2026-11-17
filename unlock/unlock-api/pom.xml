@@ -55,8 +55,8 @@
                             <inputSpec>${project.basedir}/src/main/resources/META-INF/openapi.yaml</inputSpec>
                             <generatorName>jaxrs-spec</generatorName>
                             <generateSupportingFiles>false</generateSupportingFiles>
-                            <apiPackage>mxmou.prpo.api</apiPackage>
-                            <modelPackage>mxmou.prpo.api.model</modelPackage>
+                            <apiPackage>mxmou.prpo.unlock.api</apiPackage>
+                            <modelPackage>mxmou.prpo.unlock.api.model</modelPackage>
                             <configOptions>
                                 <sourceFolder>src/main/java</sourceFolder>
                                 <interfaceOnly>true</interfaceOnly>
